@@ -115,9 +115,11 @@ def main(filename: str, headless: bool, slow_mo: float):
         
         with open(filename, "w", encoding="utf8") as file:
             print(report_text, file=file)
-
+            
         sleep(slow_mo / 1000) # Allows us to see the popup
+        popup.close() # Make sure to close each popup before moving on to the next to save memory
+        sleep(slow_mo / 1000)
 
 
 if __name__ == "__main__":
-    main(filename="report.txt", headless=False, slow_mo=1000)
+    main(filename="report.txt", headless=False, slow_mo=400)
