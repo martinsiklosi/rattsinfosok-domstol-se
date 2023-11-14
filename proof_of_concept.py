@@ -26,15 +26,14 @@ def get_frame(page):
     return iframe
 
 
-def load_results(iframe, start_date: str, end_date: str) -> None:
+def load_results(iframe, court_value: str, start_date: str, end_date: str) -> None:
     """Load the results in the iframe.
     start_date and end_date must be in the format yyyy-mm-dd."""
 
     # Select all courts
-    dropdown_value = "ALLAMYND"
     dropdown_selector = "#select-domstolmyndighet"
     iframe.wait_for_selector(dropdown_selector)
-    iframe.select_option(dropdown_selector, dropdown_value)
+    iframe.select_option(dropdown_selector, court_value)
 
     # Enter start date
     start_date_selector = "#falt-avgorandedatum-fran"
@@ -114,8 +113,8 @@ def main(max_reports: int, headless: bool, slow_mo: float):
         # Get the frame
         iframe = get_frame(page)
 
-        # Load the results
-        load_results(iframe, start_date="2020-01-01", end_date="2021-01-01")
+        # Load the results (HDO is Högsta Domstolen)
+        load_results(iframe, court_value="HDO", start_date="2020-01-01", end_date="2020-12-31")
 
         # Lets grab the links to reports
         report_handles = get_report_handles(iframe)
