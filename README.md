@@ -1,6 +1,7 @@
 # Proof of concept: Scraping rattsinfosok.domstol.se with Playwright
 
-This is a proof of concept that [rattsinfosok.domstol.se](https://rattsinfosok.domstol.se/lagrummet/) can be scraped using Playwright, a browser automation tool. The script loads all court filing between two dates and save the first filing to a text file.
+This is a proof of concept that [rattsinfosok.domstol.se](https://rattsinfosok.domstol.se/lagrummet/) can be scraped using Playwright, a browser automation tool. 
+The script loads all court filing between two dates from a select court and saves the reports on the first page.
 
 ## Install dependencies
 
