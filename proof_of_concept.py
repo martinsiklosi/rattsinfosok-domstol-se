@@ -56,23 +56,24 @@ def load_results(iframe, court_value: str, start_date: str, end_date: str) -> No
 
 
 def get_report_handles(iframe):
-    """Clicks on the first result."""
-    # All of the result rows are either the class "forstaRad" or "andraRad"
-    class1 = "forstaRad"
-    class2 = "andraRad"
-    xpath_expression = f"//tr[contains(@class, '{class1}') or contains(@class, '{class2}')]"
-
-    # Get the rows
-    iframe.wait_for_selector(f"xpath={xpath_expression}")
-    row_handles = iframe.query_selector_all(f"xpath={xpath_expression}")
+    """Get handles to the reports. 
+    Clicking on these will load the popup with the report."""
+    # All of the result rows has class forstaRad
+    selector = ".forstaRad"
+    iframe.wait_for_selector(selector)
+    row_handles = iframe.query_selector_all(selector)
     assert row_handles is not None
 
     # The report is found in the last column
     report_handles = [row_handle.query_selector("td:last-child a")
                       for row_handle in row_handles
                       if row_handle]
+
     # Get rid of None values
-    report_handles = [rh for rh in report_handles if rh]
+    assert None not in report_handles
+    report_handles = [rh 
+                      for rh in report_handles 
+                      if rh] # Just to make the type checker happy
     return report_handles
 
 
@@ -127,7 +128,7 @@ def main(max_reports: int, headless: bool, slow_mo: float):
         # For this demo i will just scrape the first 10 results
         for report_handle in report_handles[:max_reports]:
             report_text = scrape_report(report_handle, page)
-
+            
             report_name = report_handle.text_content()
             assert report_name is not None
             filename = report_name.strip()
